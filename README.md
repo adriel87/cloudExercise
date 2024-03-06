@@ -1,29 +1,14 @@
-# Basico
+# Básico - despliegue automático
 
-El objetivo básico de este laboratorio es desplegar la aplicación realizada en el anterior: Laboratorio Módulo 4 API REST.
+Indice:
+- [descripcion del ejercicio](#básico---despliegue-automático)
+- [Para muestra un botón](#para-muestra-un-botón)
 
-Haremos 2 despliegues, uno manual y otro automático. Para poder hacer la entrega crearemos 3 ramas en el repositorio despliegue-manual-mock, despliegue-manual-mongo y despliegue-automatico.
-Rama despliegue-manual-mock
+para realizar el despliegue manual se han seguido las indicaciones recibidas tanto en los videos como en el readme del proyecto `00-stack-documental/05-cloud/08-auto-render-deploy`
 
-Desplegar aplicación en Render manualmente con datos mocks.
-Rama despliegue-manual-mongo
+Para la ultima parte del ejercicio se añade un Dockerfile que nos va a hacer la imagen de nuestra aplicacion tanto de back como de front
 
-    Crear base de datos de producción en MongoDB Atlas y actualizar variables de entorno en Render.
+## Para muestra un botón
 
-    Insertar datos (diferentes de los datos mock) en MongoDB Atlas desde un console-runner.
+El enlace a la [aplicación 📎](https://cloudexercise-hluj.onrender.com)
 
-Rama despliegue-automatico
-
-    Crear una aplicación Render diferente. Aqui ya directamente se puede conectar con el MongoDB Atlas creado en el paso anterior.
-
-    Crear todos los ficheros necesarios para poder realizar un despliegue automático.
-
-Opcional
-
-Podéis realizar los siguientes ejercicios opcionales:-
-
-    Consumir las imágenes de las casas desde el storage S3 Amazon.
-
-    Crear rama despliegue-azure-automatico para implementar el despliegue Azure + Docker.
-
-    Crear rama despliegue-aws-automatico para implementar el despliegue Amazon + Docker.
