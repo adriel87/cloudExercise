@@ -2,66 +2,28 @@
 
 Indice:
 - [descripcion del ejercicio](#basico---despliegue-manual)
-- [la carpeta dist](#la-carpeta-dist)
-- [probando](#probando-nuestro-build)
+- [desde el despliegue manual](#partiendo-desde-el-despliegue-manual)
+- [Cambios](#los-cambios-necesarios)
+- [Para muestra un botón](#para-muestra-un-botón)
 
-para realizar el despliegue manual se han seguido las indicaciones recibidas tanto en los videos como en el readme del proyecto `00-stack-documental/05-cloud/02-manual-render-deploy`
+para realizar el despliegue manual se han seguido las indicaciones recibidas tanto en los videos como en el readme del proyecto `00-stack-documental/05-cloud/03-mongo-deploy`
 
-## La carpeta dist
+En este caso tenemos que realizar una conexión con una base de datos en la nube, para ello vamos a usar mongo y su cluster gratuito para realizar la prueba.
 
-en esta carpeta esta el resultado de hacer el build del front, colocar ese paquete en la una carpeta publica en el proyecto del back. Luego hacer un build en el back incluyendo un par de scripts nuevos obtenemos el bundle de nuestra aplicación 
+## Partiendo desde el despliegue manual
 
-> los scripts
-```json
-{
-    ...
-    "clean":"rimraf dist",
-    "prebuild": "npm run clean",
-    "build": "tsc --project tsconfig.prod.json",
-    ...
-}
-```
-
-una vez obtenido el bundle tenemos que hacer modificaciones en el `package.json`, tenemos que eliminar las dependencias de desarrollo y modificar un poco desde donde estamos haciendo los imports de nuestros scripts
-> en este punto tuve un pequeño problema, y es que me fallaba a la hora de ejecutar el script de index.js por que no encontraba los modulos donde se encontraban los archivos
+Hemos aprovechado el repo en que realizamos el despliegue manual [👉 este 👈](https://github.com/adriel87/manual-deploy)
 
 
-```json
-EL FALLO
-{
-    // aqui un error de tipo provocaba que no pudieramos importar nuestros modulos
-    ...
-    "imports": {
-       "#common/*": "./src/common/*.js",
-       }
-    ...
-}
+## Los cambios necesarios
 
-EL FIX
-{
-    // necesitaba indicar el tipo de archivo para cuando usara el alias    ...
-    "imports": {
-       "#common/*.js": "./src/common/*.js",
-       }
-    ...
-}
-```
+en el repo lo que hay que hacer es actualizar la variable de entorno que apunta la dirección de nuestra BBDD, para ello vamos a nuestro dashboard de render y en la variable de entorno `MONGO_URI` usamos la cadena de conexión que podemos recuperar desde el dashboard de mongo. Se ha creado un usuario para que esta base de datos en concreto con los permisos necesarios de lectura/escritura.
 
+## Para muestra un botón
 
+El enlace a la [aplicación 📎](https://manual-mongo-deploy.onrender.com)
 
-## Probando nuestro build
-
-en este punto solo nos quedaba conectar nuestro repo con render para que poder levantar nuestro aplicativo
-
-siguiendo el readme me cree un nuevo repo privado
-
-[👉 el repo 👈](https://github.com/adriel87/manual-deploy)
-
-fue durante la fase de deploy que me di cuenta del fallo de los ***imports***, asi que siempre es bueno probar que todo esto nos funcione en local
-
-una vez solucionado lo de los import, se realizo con exito el deploy y pude [probar la app](https://manual-deploy-kpjz.onrender.com/)
-
-![el login](assets/login.png)
+en la siguiente imagen vemos el listado de libros creados  
 
 ![el dashboard](assets/lista.png)
 
