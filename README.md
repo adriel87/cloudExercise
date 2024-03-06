@@ -1,29 +1,67 @@
-# Basico
+# Basico - despliegue manual
 
-El objetivo básico de este laboratorio es desplegar la aplicación realizada en el anterior: Laboratorio Módulo 4 API REST.
+Indice:
+- [descripcion del ejercicio](#basico---despliegue-manual)
+- [la carpeta dist](#la-carpeta-dist)
+- [probando](#probando-nuestro-build)
 
-Haremos 2 despliegues, uno manual y otro automático. Para poder hacer la entrega crearemos 3 ramas en el repositorio despliegue-manual-mock, despliegue-manual-mongo y despliegue-automatico.
-Rama despliegue-manual-mock
+para realizar el despliegue manual se han seguido las indicaciones recibidas tanto en los videos como en el readme del proyecto `00-stack-documental/05-cloud/02-manual-render-deploy`
 
-Desplegar aplicación en Render manualmente con datos mocks.
-Rama despliegue-manual-mongo
+## La carpeta dist
 
-    Crear base de datos de producción en MongoDB Atlas y actualizar variables de entorno en Render.
+en esta carpeta esta el resultado de hacer el build del front, colocar ese paquete en la una carpeta publica en el proyecto del back. Luego hacer un build en el back incluyendo un par de scripts nuevos obtenemos el bundle de nuestra aplicación 
 
-    Insertar datos (diferentes de los datos mock) en MongoDB Atlas desde un console-runner.
+> los scripts
+```json
+{
+    ...
+    "clean":"rimraf dist",
+    "prebuild": "npm run clean",
+    "build": "tsc --project tsconfig.prod.json",
+    ...
+}
+```
 
-Rama despliegue-automatico
+una vez obtenido el bundle tenemos que hacer modificaciones en el `package.json`, tenemos que eliminar las dependencias de desarrollo y modificar un poco desde donde estamos haciendo los imports de nuestros scripts
+> en este punto tuve un pequeño problema, y es que me fallaba a la hora de ejecutar el script de index.js por que no encontraba los modulos donde se encontraban los archivos
 
-    Crear una aplicación Render diferente. Aqui ya directamente se puede conectar con el MongoDB Atlas creado en el paso anterior.
 
-    Crear todos los ficheros necesarios para poder realizar un despliegue automático.
+```json
+EL FALLO
+{
+    // aqui un error de tipo provocaba que no pudieramos importar nuestros modulos
+    ...
+    "imports": {
+       "#common/*": "./src/common/*.js",
+       }
+    ...
+}
 
-Opcional
+EL FIX
+{
+    // necesitaba indicar el tipo de archivo para cuando usara el alias    ...
+    "imports": {
+       "#common/*.js": "./src/common/*.js",
+       }
+    ...
+}
+```
 
-Podéis realizar los siguientes ejercicios opcionales:-
 
-    Consumir las imágenes de las casas desde el storage S3 Amazon.
 
-    Crear rama despliegue-azure-automatico para implementar el despliegue Azure + Docker.
+## Probando nuestro build
 
-    Crear rama despliegue-aws-automatico para implementar el despliegue Amazon + Docker.
+en este punto solo nos quedaba conectar nuestro repo con render para que poder levantar nuestro aplicativo
+
+siguiendo el readme me cree un nuevo repo privado
+
+[👉 el repo 👈](https://github.com/adriel87/manual-deploy)
+
+fue durante la fase de deploy que me di cuenta del fallo de los ***imports***, asi que siempre es bueno probar que todo esto nos funcione en local
+
+una vez solucionado lo de los import, se realizo con exito el deploy y pude [probar la app](https://manual-deploy-kpjz.onrender.com/)
+
+![el login](assets/login.png)
+
+![el dashboard](assets/lista.png)
+
